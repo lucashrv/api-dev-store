@@ -1,4 +1,4 @@
-### Deploy front netlify - [dev-store](https://dev-store-app.netlify.app){:target="_blank"}
+### Deploy front netlify - [devstore](https://dev-store-app.netlify.app){:target="_blank"}
 
 ### link repositório front [dev-store](https://github.com/lucashrv/dev-store){:target="_blank"}
 
