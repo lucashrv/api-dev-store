@@ -1,16 +1,20 @@
-const express = require('express')
+// const express = require('express')
 
-const app = express()
+// const app = express()
 
-const router = express.Router()
+// const router = express.Router()
 
-router.get('/', (req, res) => {
-    return res.json({
-        success: true,
-        message: 'Sucesso!'
-    })
-})
+// router.get('/', (req, res) => {
+//     return res.json({
+//         success: true,
+//         message: 'Sucesso!'
+//     })
+// })
 
-app.use(router)
+// app.use(router)
 
-app.listen(8080, () => console.log('Server start'))
+// app.listen(8080, () => console.log('Server start'))
+
+const app = require('../server')
+
+module.exports = app
