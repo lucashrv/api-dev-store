@@ -32,9 +32,4 @@ connection
 app.use('/', ProductController)
 app.use('/', CategoryController)
 
-// app.get('/', (req, res) => {
-//     res.json({ msg: "asdsadsadsa" })
-// })
-
 app.listen(port, () => console.log(`Server start`))
-
