@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const connection = require('../database/database')
+const connection = require('../api/database/database')
 
 const Upload = connection.define('upload', {
     image: {
