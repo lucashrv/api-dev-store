@@ -1,20 +1,41 @@
-// const express = require('express')
+const express = require('express')
+const cors = require('cors')
+require('dotenv').config();
 
-// const app = express()
+const connection = require('../database/database')
 
-// const router = express.Router()
+// const ProductController = require('./controllers/)ProductsController'
+// const CategoryController = require('./controllers/)CategoriesController'
 
-// router.get('/', (req, res) => {
-//     return res.json({
-//         success: true,
-//         message: 'Sucesso!'
-//     })
-// })
+const port = process.env.PORT || 3001
+const app = express()
 
-// app.use(router)
+app.use(express.urlencoded(
+    { extended: false }
+))
+app.use(express.json())
 
-// app.listen(8080, () => console.log('Server start'))
+app.use(cors())
 
-const app = require('../server')
+//Static images folder
+app.use(express.static('public'))
+
+
+//DB connection
+// connection
+//     .authenticate()
+//     .then(() => console.log('Connected to DB'))
+//     .catch(e => console.log(e))
+
+//Routes
+
+// app.use('/', ProductController)
+// app.use('/', CategoryController)
+
+app.get('/', (req, res) => {
+    res.json({ msg: "asdsadsadsa" })
+})
+
+app.listen(port, () => console.log(`Server start`))
 
 module.exports = app
