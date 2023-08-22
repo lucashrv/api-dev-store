@@ -5,6 +5,7 @@ const connection = new Sequelize(
     process.env.POSTGRES_URL + process.env.SSL_MODE,
     {
         dialect: 'postgres',
+        dialectModule: require('pg'),
         timezone: '-03:00',
         logging: false
     }
