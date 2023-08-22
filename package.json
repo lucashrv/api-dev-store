@@ -2,13 +2,13 @@
   "name": "dev-store-api",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "api/index.js",
   "engines": {
     "node": "18.X"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js",
+    "dev": "nodemon api/index.js",
     "start": "node ."
   },
   "author": "Lucas Henrique",
