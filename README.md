@@ -1,6 +1,6 @@
 ### Deploy front netlify - [dev-store](https://dev-store-app.netlify.app)
 
-### link repositório front [dev-store](https://github.com/lucashrv/dev-store/){:target="_blank"}
+### link repositório front [dev-store](https://github.com/lucashrv/dev-store/)
 
 #### Projeto full-stack possuindo funcionalidades de listagem, criação, edição e deleção de categorias e produtos, nos produtos possuindo upload de imagem com storage no firebase, com funcionalidade de carrinho podendo adicionar ou remover quantidade e totalização dos preços, categorias e produtos possuem pesquisa e produto possui filtro por categorias na listagem
 
