@@ -17,10 +17,6 @@ app.use(express.json())
 
 app.use(cors())
 
-//Static images folder
-app.use(express.static('public'))
-
-
 //DB connection
 connection
     .authenticate()

@@ -1,27 +1,20 @@
 const express = require('express')
 const Category = require('../models/Categories')
 const Product = require('../models/Products')
-const Upload = require('../models/Upload')
 
 // Image upload
 const multer = require('multer')
 const path = require('path')
-const fs = require('fs')
+const uploadImage = require('../services/firebase')
+
+// admin firebase
+const admin = require("firebase-admin");
 
 // Upload product image ( multer )
 
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, 'public/images')
-    },
-    filename: (req, file, callback) => {
-        callback(null, Date.now() + path.extname(file.originalname))
-    },
-})
-
-const upload = multer({
-    storage,
-    limits: { fileSize: '500000' },
+const Multer = multer({
+    storage: multer.memoryStorage(),
+    limits: 1024 * 1024,
     fileFilter: (req, file, callback) => {
         const fileTypes = /jpeg|jpg|png|gif/
         const mimeType = fileTypes.test(file.mimetype)
@@ -76,15 +69,16 @@ router.get('/api/products/getOne/:id', async (req, res) => {
     }
 })
 
-router.post('/api/products/create', async (req, res) => {
+router.post('/api/products/create', Multer.single('image'), uploadImage, async (req, res) => {
     const {
         name,
         description,
         categoryId,
         amount,
-        price,
-        image
+        price
     } = req.body
+
+    const { firebaseUrl } = req.file ? req.file : ''
 
     if (!name) {
         return res.status(404).json({
@@ -134,44 +128,12 @@ router.post('/api/products/create', async (req, res) => {
             categoryId,
             amount,
             price,
-            image
+            image: firebaseUrl
         })
 
         return res.status(200).json({
             msg: 'Product created',
             data: create
-        })
-
-    } catch (error) {
-
-        console.log(error)
-
-        return res.status(500).json({ msg: 'Internal error' })
-
-    }
-})
-
-router.post('/api/products/upload', upload.single('image'), async (req, res) => {
-    const image = req?.file?.filename
-
-    if (!image) {
-        fs.unlinkSync('public/images/' + image)
-
-        return res.status(422).json({
-            msg: 'image is required!'
-        })
-    }
-
-    try {
-
-        const create = await Upload.create({
-            image
-        })
-
-        return res.status(200).json({
-            msg: 'Product created',
-            data: create,
-            image
         })
 
     } catch (error) {
@@ -269,10 +231,11 @@ router.delete('/api/products/destroy/:id', async (req, res) => {
     }
 
     try {
-
-        idExists.image && fs.unlinkSync('public/images/' + idExists.image)
+        const fileUrl = idExists.image ? idExists.image : ''
 
         await Product.destroy({ where: { id } })
+
+        await admin.storage().bucket().file("" + fileUrl.split('/')[4]).delete();
 
         return res.status(200).json({ msg: `Product id ${id} destroyed` })
 
